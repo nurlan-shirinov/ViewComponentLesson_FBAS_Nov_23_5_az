@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+
 #region UseSqlServer
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -13,8 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlServer(conn);
 });
 #endregion
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
 
 if (!app.Environment.IsDevelopment())
 {
@@ -28,6 +31,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
